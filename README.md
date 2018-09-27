@@ -6,7 +6,7 @@ Connect Cadence Virtuoso to a Python client using TCP sockets.
 
 The installation needs to be performed both in the **client** and the **server**. We recommend you to use *easy_install* or *pip* to install SOCAD in your system.
 
-## Install with *pip*
+### Install with *pip*
 
 Go to the project folder and run:
 
@@ -14,7 +14,7 @@ Go to the project folder and run:
 pip install socad
 ```
 
-## Build from sources
+### Build from sources
 
 Go to the project folder and run:
 
@@ -32,6 +32,8 @@ Import the *Client* or the *Server* to your program using:
 from socad import Client
 from socad import Server
 ```
+
+TODO: Complete
 
 ## Example
 
