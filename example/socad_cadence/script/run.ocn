@@ -1,0 +1,28 @@
+;; output file
+out_path = getShellEnvVar("RESULT_FILE")
+outf = outfile(out_path "w")
+
+run()   ;; run sim
+
+;; outputs
+; vdsat = v("M0.m1:vdsat" ?result "dcOp-dc")
+
+max_ac = ymax(db20(VF("/out")))
+gbw = gainBwProd(VF("/out"))
+
+;results()
+;selectResults('dcOpInfo)
+;report(?output outf ?reportStyle "spice")
+
+;selectResults('tran)
+;ocnPrint(?output outf getData("out"))
+
+
+fprintf( outf "%s\t%f\n", "max_ac", max_ac)
+fprintf( outf "%s\t%f\n", "gbw", gbw)
+
+
+;;fprintf( outf "%s\t%f", vdsat.name, vdsat)
+
+close(outf)
+

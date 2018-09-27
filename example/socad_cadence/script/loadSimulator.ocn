@@ -1,0 +1,25 @@
+;; set up the number notation, precision, etc, of the results
+; more info at doc "oceanref"
+setup(?numberNotation 'engineering)
+
+;; simulator and design folders
+simulator( 'spectre )
+design(	 "/home/tarzan/Projects/65nm_design_STM/simulation/commonSource/spectre/schematic/netlist/netlist")
+resultsDir( "/home/tarzan/Projects/65nm_design_STM/simulation/commonSource/spectre/schematic" )
+modelFile( 
+    '("/home/tarzan/Projects/65nm_design_STM/misc_circuits/commonSource/oppoint.scs" "")
+)
+
+;; Modelfile
+definitionFile(
+    "models.scs"
+)
+
+;; analysis to perform
+;analysis('dc ?saveOppoint t  )
+;analysis('tran ?stop "10m" ?errpreset "moderate" )
+analysis('ac ?start "10"  ?stop "10G"  )
+
+;; variables to save
+save( 'v "/out" )
+temp( 27 ) 
