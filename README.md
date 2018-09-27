@@ -11,10 +11,12 @@ The installation needs to be performed both in the **client** and the **server**
 Go to the project folder and run:
 
 ```shell
-pip install socad
+pip install .
 ```
 
-### Build from sources
+**NOTE:** run `pip install socad` from the project directory doesn't work because pip will look for the package on PyPi.
+
+### Build from source
 
 Go to the project folder and run:
 
@@ -22,7 +24,11 @@ Go to the project folder and run:
 python setup.py install
 ```
 
-If your system doesn't allow to install packages just copy the `client.py` and `server.py` from **socad/** to the directory where you have your program, and import the files directly
+### Use local module (not recommended)
+
+If the Cadence machine does not allow to install the **socad** package from the methods above, it loads the local module `examples/socad_cadence/server.py`. 
+
+*Please note that this module may not be updated.*
 
 ## Usage
 
@@ -43,7 +49,7 @@ To run the example:
 
 1. Place the package **example/socad_cadence/** in the machine that runs Cadence (i.e. the **server**).
 2. Place the package **example/** in your computer.
-3. Connect your computer to the **server** through ssh using local port forwarding for the port used to perform communication (e.g. 3000). E.g.:
+3. Connect your computer to the **server**. If you are connect through ssh you need to set a local forwarding for the port used to perform communication. E.g.:
 
 ```Shell script
 ssh -L LOCAL_PORT:localhost:HOST_PORT user@SERVER_IP
