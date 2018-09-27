@@ -19,7 +19,16 @@ import os
 import sys
 
 import util
-from socad import Server
+# If can't import from the global package 'socad' import from a local package.
+try:
+    from socad import Server
+except ImportError as err:
+    # If can't import from the file server.py
+    try:
+        from server import Server
+    except ImportError as err:
+        print("[ERROR] {0}. Exiting...".format(err))
+        sys.exit('1')
 
 # Simulator files
 SIM_FILE = os.environ.get('SOCAD_SCRIPT_DIR') + "/loadSimulator.ocn"
@@ -116,7 +125,7 @@ def main():
 
     except IOError as err:  # NOTE: "ConnectionError" nao existe no Python 2 -_-
         server.send_warn("[CONNECTION ERROR] {0}".format(err))
-        return 1
+        return 2
 
     code = 0    # Return code
     try:
@@ -141,13 +150,13 @@ def main():
 
     except IOError as err:  # NOTE: "ConnectionError" nao existe no Python 2 -_-
         server.send_warn("[CONNECTION ERROR] {0}".format(err))
-        code = 2
+        code = 3
     except TypeError as err:
         server.send_warn("[TYPE ERROR] {0}".format(err))
-        code = 3
+        code = 4
     except KeyError as err:
         server.send_warn("[KEY ERROR] {0}".format(err))
-        code = 4
+        code = 5
 
     server.close(code)
     return code
