@@ -17,7 +17,7 @@
 
 import sys
 
-from example.util import print_menu
+from util import print_menu
 from socad import Client
 
 
@@ -54,6 +54,18 @@ def load_simulator(client):
 
 
 def process_server_response(res):
+    """Process a response received from the server.
+    
+    Args:
+        res (dict): server response
+    
+    Raises:
+        KeyError: if the received data is corrupted
+        KeyError: if the received data is invalid
+    
+    Returns:
+        tuple: type of response, received data
+    """
     try:
         typ = res['type']
         data = res['data']
@@ -101,7 +113,6 @@ def main():
 
         data = {}
         variables = {}  # Circuit variables (to be optimized)
-        results = {}  # Simulation results (to fed the optimizer)
 
         # Main loop
         while True:
