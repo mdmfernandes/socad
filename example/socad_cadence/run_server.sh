@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# This file is part of SOCAD
+# This file is part of  SOCAD
 # Copyright (C) 2018 Miguel Fernandes
 #
 # SOCAD is free software: you can redistribute it and/or modify

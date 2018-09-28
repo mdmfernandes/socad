@@ -1,5 +1,5 @@
 # This file is part of SOCAD
-# Copyright (C) 2018 Miguel Fernandes
+# Copyright (C) 2018  Miguel Fernandes
 #
 # SOCAD is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-"""Socad root package"""
+"""SOCAD root package"""
 
 from .client import Client
 from .server import Server
