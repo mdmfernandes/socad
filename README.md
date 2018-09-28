@@ -24,11 +24,9 @@ Go to the project folder and run:
 python setup.py install
 ```
 
-### Use local module (not recommended)
+### Use local module
 
-If the Cadence machine does not allow to install the **socad** package from the methods above, it loads the local module `examples/socad_cadence/server.py`. 
-
-*Please note that this module may not be updated.*
+If the Cadence machine does not allow to install the **socad** package from the methods above, it loads the local module `examples/socad_cadence/server.py`.
 
 ## Usage
 
