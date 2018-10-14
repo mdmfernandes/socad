@@ -1,14 +1,22 @@
 # SOCAD
 
-Connect Cadence Virtuoso to a Python client using sockets.
+[![Documentation Status](https://readthedocs.org/projects/socad/badge/?version=latest)](https://socad.readthedocs.io/en/latest/?badge=latest)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+SOCAD connects Cadence Virtuoso to a Python client. The communication between both processes is made through a server, using the following mechanisms:
+
+* Cadence<->Server: Inter-process communication (IPC). The server is invoked by Cadence and waits for a client communication.
+* Client<->Server: Python sockets (more info here). Both processes can be run on the same machine or on different machines, according to the socket type chosen by the user. TCP sockets are used by default.
+
+By using this library it is possible to control the Cadence environment from an external program.
 
 ## Installation
 
-The installation needs to be performed both in the **client** and the **server**. We recommend you to use *easy_install* or *pip* to install SOCAD in your system.
+The installation needs to be performed both in the **client** and the **server**. We recommend you to use *pip* to install SOCAD in your system.
 
 ### Install with *pip*
 
-Go to the project folder and run:
+Although the project is not in PyPI, you can install it using pip. Go to the project folder and run:
 
 ```shell
 pip install .
@@ -24,7 +32,7 @@ Go to the project folder and run:
 python setup.py install
 ```
 
-### Use local module
+### Use as local module
 
 If the Cadence machine does not allow to install the **socad** package from the methods above, it loads the module from `examples/socad_cadence/server.py`.
 
@@ -37,33 +45,15 @@ from socad import Client
 from socad import Server
 ```
 
-TODO: Complete
+The available functions of each class are available in the project [library reference](https://socad.readthedocs.io/en/latest/api/index.html).
+
+A complete demonstration of the program usage can be found in the example below.
 
 ## Example
 
-The provided example emulates the execution of a program that runs simulations in Cadence Virtuoso from a client in a different machine (connected through *ssh*), by executing OCEAN scripts that are provided by the user.
+The provided example runs simulations in Cadence Virtuoso from a client in a different machine (connected through *ssh*), by executing OCEAN scripts provided by the user.
 
-To run the example:
-
-1. Place the package **example/socad_cadence/** in the machine that runs Cadence (i.e. the **server**).
-2. Place the package **example/** in your computer.
-3. Connect your computer to the **server**. If you are connect through ssh you need to set a local forwarding for the port used to perform communication. E.g.:
-
-```Shell script
-ssh -L LOCAL_PORT:localhost:HOST_PORT user@SERVER_IP
-```
-
-4. Run Cadence, in the **server**, by executing the script *start_cadence.sh*.
-5. Run *socad_example.py* on your computer.
-
-The following menu should appear at the program execution:
-
-```text
-############### SOCAD EXAMPLE ###############
-1 - Load simulator
-2 - Update variables and run simulation
-0 - Exit.
-```
+For more a step guide of the example, check [this tutorial](https://socad.readthedocs.io/en/latest/tutorials/common_source.html).
 
 ## Versioning
 
