@@ -75,9 +75,9 @@ def process_server_response(res):
     # If response type is loadSimulator we want to receive the original (user defined)
     # circuit variables.
     if 'loadSimulator' in typ:
-        print("\nSimulator loaded with success!!!")
+        print("\nSimulator loaded with success! Received variables:")
         for key, val in data.items():
-            print(f"Key: {key} - Val:{val}")
+            print(f"Variable: {key} - Value: {val}")
 
         return 'vars', data
     # If response type is updateAndRun we want to receive simulation results to
@@ -85,7 +85,7 @@ def process_server_response(res):
     elif 'updateAndRun' in typ:
         print('\nReceived updateAndRun from Cadence')
 
-        print(data)
+        print(f"Simulation results: {data}")
 
         return 'results', data
     else:
@@ -94,6 +94,14 @@ def process_server_response(res):
 
 def main():
     """Main function"""
+
+    # Print license
+    print("\nSOCAD  Copyright (C) 2018  Miguel Fernandes")
+    print("This program comes with ABSOLUTELY NO WARRANTY.")
+    print("This is free software, and you are welcome to redistribute it under the terms")
+    print("of the GNU General Public License as published by the Free Software Foundation,")
+    print("either version 3 of the License, or (at your option) any later version.")
+    print("For more information, see <http://www.gnu.org/licenses/>\n")
 
     try:
         print("Starting client...")
@@ -104,7 +112,7 @@ def main():
         return 1
 
     host = "localhost"
-    port = 4000
+    port = 3000
 
     try:
         print("Connecting to server...")
@@ -121,7 +129,7 @@ def main():
             if option == 1:
                 req = dict(type='loadSimulator', data='ola')
             elif option == 2:
-                print("Sending updated variables...")
+                print("\nSending updated variables...")
                 for key, val in variables.items():
                     print(f"Key: {key} - Val:{val}")
                 req = dict(type='updateAndRun', data=variables)
@@ -146,7 +154,7 @@ def main():
             elif typ == 'results':
                 # results = data
                 for key, val in variables.items():
-                    variables[key] = val + val * 0.1
+                    variables[key] = val * 1.1
             else:
                 raise KeyError(f"Invalid data type: {typ}")
 

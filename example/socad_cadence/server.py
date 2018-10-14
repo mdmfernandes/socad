@@ -257,7 +257,7 @@ class Server:
         """Close the server socket and end the communication with Cadence."""
         self.conn.close()
         # Send feedback to Cadence
-        self.send_warn("Connection with the optimizer ended!\n\n")
+        self.send_warn("Connection with the client ended!\n\n")
         self.server_out.close()  # close stdout
         self.server_err.close()  # close stderr
         self.cad_file.exit(code)  # close connection to cadence (code up to 255)

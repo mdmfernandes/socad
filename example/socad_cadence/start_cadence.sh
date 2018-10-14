@@ -16,9 +16,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 # Project name
-export SOCAD_PROJECT_NAME="commonSource-tutorial"
+export SOCAD_PROJECT_NAME="project_example"
 # Project work space
-SOCAD_WORK_SPACE="/home/tarzan/Projects"
+SOCAD_WORK_SPACE="/home/example/project_ws"
 
 ## Server info
 # Client Address
@@ -48,9 +48,18 @@ fi
 # Create the results file in the project root directory
 touch "$SOCAD_ROOT_DIR/sim_res"
 
+# Print license
+echo 
+echo "SOCAD  Copyright (C) 2018  Miguel Fernandes"
+echo "This program comes with ABSOLUTELY NO WARRANTY."
+echo "This is free software, and you are welcome to redistribute it under the terms"
+echo "of the GNU General Public License as published by the Free Software Foundation,"
+echo "either version 3 of the License, or (at your option) any later version."
+echo "For more information, see <http://www.gnu.org/licenses/>"
 echo
 echo "**********************************************************************"
 echo "*                          Starting Cadence                          *"
 echo "**********************************************************************"
+
 # Code to run Cadence and the script cadence.il
-icfb -nograph -restore cadence.il
+virtuoso -nograph -restore cadence.il

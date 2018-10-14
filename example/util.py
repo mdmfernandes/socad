@@ -26,7 +26,7 @@ def print_menu():
     """
     menu = {}
     menu['1'] = "Load simulator"
-    menu['2'] = "Update variables and run simulation"
+    menu['2'] = "Update variables and run a simulation"
     menu['0'] = "Exit."
 
     selection = -1
@@ -36,7 +36,6 @@ def print_menu():
     print("\n############### SOCAD EXAMPLE ###############")
 
     for entry in options:
-        # print("{} - {}".format(entry, menu[entry]))
         print(f"{entry} - {menu[entry]}")
 
     while True:

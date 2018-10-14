@@ -1,6 +1,6 @@
 # SOCAD
 
-Connect Cadence Virtuoso to a Python client using TCP sockets.
+Connect Cadence Virtuoso to a Python client using sockets.
 
 ## Installation
 
@@ -26,7 +26,7 @@ python setup.py install
 
 ### Use local module
 
-If the Cadence machine does not allow to install the **socad** package from the methods above, it loads the local module `examples/socad_cadence/server.py`.
+If the Cadence machine does not allow to install the **socad** package from the methods above, it loads the module from `examples/socad_cadence/server.py`.
 
 ## Usage
 
@@ -69,7 +69,7 @@ The following menu should appear at the program execution:
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [releases on the project repository](https://github.com/mdmfernandes/socad/releases/).
 
-## Authors
+## Main Contributors
 
 * **Miguel Fernandes** - *Initial work* - [mdmfernandes](https://github.com/mdmfernandes)
 

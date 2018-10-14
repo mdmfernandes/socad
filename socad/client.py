@@ -21,14 +21,19 @@ import struct
 
 
 class Client:
-    """A client that handles Cadence requests.
+    """A client that handles Cadence Virtuoso requests.
 
-    This client receives data from Cadence (through a server) and processes that data.
-    It then gather the results and send them back to Cadence.
-    All the data is serialized in JSON and sent as a JSON string.
+    This client receives data from Cadence (through a server) and processes
+    that data. It then gather the processed data and send it back to Cadence
+    through the server. It sends data in JSON format and the received data
+    should also be serialized in JSON.
 
-    Keyword Arguments:
-        sock {obj} -- socket to use in the connection (default: None)
+    Arguments:
+        sock (object, optional): socket to use for the connection
+            (default: None).
+
+    Attributes:
+        sock (object): socket to use for the connection with a server.
     """
 
     def __init__(self, sock=None):
@@ -40,16 +45,16 @@ class Client:
 
     def run(self, host, port):
         """Start the client.
-
+        
         Arguments:
-            host {str} -- remote socket IP address
-            port {int} -- remote socket port
-
+            host (str): remote socket IP address.
+            port (int): remote socket port.
+        
         Raises:
-            ConnectionError -- if can't connect to server
-
+            ConnectionError: if can't connect to server.
+        
         Returns:
-            list -- remote socket name
+            list: remote socket name.
         """
         try:
             # Try to connect to the specified server
@@ -70,18 +75,20 @@ class Client:
     def send_data(self, obj):
         """Send an object through a socket.
 
-        1 - Serialize the object in JSON and encode the string as a bytes object;
-        2 - pack the serialized object length in an unsigned int (I) [four bytes],
-            and big-endian byte order (>) (this way the object size message has
-            always the same size (four bytes));
+        1 - Serialize the object in JSON and encode the string;
+
+        2 - pack the serialized object length in an unsigned int (I)[4 bytes],
+        and big-endian byte order (>) (this way the *object size* message
+        has always the same size);
+
         3 - send the data.
 
         Arguments:
-            obj {dict} -- object to send
+            obj (dict): object to send.
 
         Raises:
-            TypeError -- if the object is not serializable in JSON
-            ConnectionError -- if the socket connection is broken
+            TypeError: if the object is not serializable in JSON.
+            ConnectionError: if the socket connection is broken.
         """
         # Serialize the object in JSON and encode the string as a bytes object
         try:
@@ -103,30 +110,30 @@ class Client:
             sent = self.socket.send(data[total_sent:])
 
             if not sent:
-                raise ConnectionError(
-                    "Socket connection broken while sending data")
+                raise ConnectionError("Socket connection broken while sending data")
 
             total_sent += sent
 
     def recv_data(self):
         """Receive an object through a socket.
 
-        1 - Receive the first four bytes of data, which contains the data length;
+        1 - Receive the first 4 bytes of data, which contains the data length;
+
         2 - Receive the data, serialized in JSON, and decode it;
+
         3 - Convert the received data in an object.
 
         Raises:
-            ConnectionError -- if the socket connection is broken
-            TypeError -- if the received data is not in JSON format
+            ConnectionError: if the socket connection is broken.
+            TypeError: if the received data is not in JSON format.
 
         Returns:
-            dict -- decoded and de-serialized received data
+            dict: decoded and de-serialized received data.
         """
         data_len = self.recv_bytes(4)
 
         if not data_len:
-            raise ConnectionError(
-                "Socket connection broken while receiving data")
+            raise ConnectionError("Socket connection broken while receiving data")
 
         # >I means a unsigned int (I) (with four bytes length) and big-endian byte order (>)
         msglen = struct.unpack(">I", data_len)[0]
@@ -144,13 +151,13 @@ class Client:
         """Receive a specified number of bytes through a socket.
 
         Arguments:
-            n_bytes {int} -- number of bytes to receive
+            n_bytes (int): number of bytes to receive.
 
         Raises:
-            ConnectionError -- if the socket connection is broken
+            ConnectionError: if the socket connection is broken.
 
         Returns:
-            bytes -- received stream of bytes
+            bytes: received bytes stream.
         """
         data = b""  # Bytes literal
         data_len = len(data)
@@ -159,8 +166,7 @@ class Client:
             packet = self.socket.recv(min(n_bytes - data_len, 1024))
 
             if not packet:
-                raise ConnectionError(
-                    "Socket connection broken while receiving a byte")
+                raise ConnectionError("Socket connection broken while receiving a byte")
 
             data_len += len(packet)
             data += packet

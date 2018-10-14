@@ -1,28 +1,21 @@
-;; output file
-out_path = getShellEnvVar("RESULT_FILE")
-outf = outfile(out_path "w")
+run()   ; run a simulation
 
-run()   ;; run sim
+; Output file
+out_file = getShellEnvVar("SOCAD_RESULT_FILE")
+outf = outfile(out_file "w")
 
-;; outputs
-; vdsat = v("M0.m1:vdsat" ?result "dcOp-dc")
+; Simulation results
+GAIN = ymax(mag(v("/out" ?result "ac")))
+REG1 = pv("M1.m1" "region" ?result "dcOpInfo")
+REG2 = pv("M2.m1" "region" ?result "dcOpInfo")
+GBW = (gainBwProd(mag(v("/out" ?result "ac"))) || 0.0)
+POWER = (- pv("V0" "pwr" ?result "dcOpInfo"))
 
-max_ac = ymax(db20(VF("/out")))
-gbw = gainBwProd(VF("/out"))
+; Save results to file
+fprintf( outf "%s\t%g\n", "GAIN", GAIN)
+fprintf( outf "%s\t%d\n", "REG1", REG1)
+fprintf( outf "%s\t%d\n", "REG2", REG2)
+fprintf( outf "%s\t%g\n", "GBW", GBW)
+fprintf( outf "%s\t%e\n", "POWER", POWER)
 
-;results()
-;selectResults('dcOpInfo)
-;report(?output outf ?reportStyle "spice")
-
-;selectResults('tran)
-;ocnPrint(?output outf getData("out"))
-
-
-fprintf( outf "%s\t%f\n", "max_ac", max_ac)
-fprintf( outf "%s\t%f\n", "gbw", gbw)
-
-
-;;fprintf( outf "%s\t%f", vdsat.name, vdsat)
-
-close(outf)
-
+close(outf) ; Close the file

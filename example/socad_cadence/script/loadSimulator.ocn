@@ -1,25 +1,23 @@
-;; set up the number notation, precision, etc, of the results
-; more info at doc "oceanref"
+; Set up the number notation, precision, etc, of the results
 setup(?numberNotation 'engineering)
 
-;; simulator and design folders
+; Simulator and design folders
 simulator( 'spectre )
-design(	 "/home/tarzan/Projects/65nm_design_STM/simulation/commonSource/spectre/schematic/netlist/netlist")
-resultsDir( "/home/tarzan/Projects/65nm_design_STM/simulation/commonSource/spectre/schematic" )
+design("CADENCE_WORKSPACE/simulation/COMMON_SOURCE/spectre/schematic/netlist/netlist")
+resultsDir("CADENCE_WORKSPACE/simulation/COMMON_SOURCE/spectre/schematic" )
 modelFile( 
-    '("/home/tarzan/Projects/65nm_design_STM/misc_circuits/commonSource/oppoint.scs" "")
+    '("CADENCE_WORKSPACE/nominal/spectre/nominalwrapper.scs" "")
 )
-
-;; Modelfile
 definitionFile(
     "models.scs"
 )
 
-;; analysis to perform
-;analysis('dc ?saveOppoint t  )
-;analysis('tran ?stop "10m" ?errpreset "moderate" )
-analysis('ac ?start "10"  ?stop "10G"  )
+; Analysis to perform
+analysis('ac ?start "10k"  ?stop "1G"  )
+analysis('dc ?saveOppoint t  )
+envOption(
+    'analysisOrder  list("dc" "ac") 
+)
 
-;; variables to save
-save( 'v "/out" )
+; Other settings
 temp( 27 ) 

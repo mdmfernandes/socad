@@ -17,7 +17,7 @@
 
 cadence_py="cadence.py"
 
-cmd="python3.6 $cadence_py"
+cmd="python $cadence_py"
 
 # replace the shell with a given program (executing it, not as new process)
 exec $cmd

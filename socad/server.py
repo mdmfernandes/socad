@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-"""Server that stands between the client and cadence."""
+"""Server that stands between a client and Cadence Virtuoso."""
 
 import json
 import socket
@@ -28,7 +28,7 @@ def closing(thing):
     streams is not defined in python 2.
 
     Arguments:
-        thing {stream} -- stream (file, socket, ...)
+        thing (stream): stream (file, socket, ...)
     """
     try:
         yield thing
@@ -39,23 +39,23 @@ def closing(thing):
 class Server:
     """A server that handles skill commands.
 
-    This server is started and ran by cadence. It listens for commands from the optimizer
-    from a TCP socket, then pass the command to cadence. It then gather the result and
-    send it back to the optimizer.
+    This server is started and ran by Cadence Virtuoso. It receives data from
+    a client and passes it to Cadence. It then gather the Cadence response and
+    send it back to the client. The data sent to client is serialized in JSON
+    and the data from client should also be in JSON.
 
     Arguments:
-        cad_file {file} -- cadence stream
-
-    Keyword Arguments:
-        sock {obj} -- socket to use in the connection (default: None)
+        cad_stream (object): Cadence stream.
+        sock (object, optional): socket to use in the connection
+            (default: None).        
     """
 
-    def __init__(self, cad_file, sock=None):
+    def __init__(self, cad_stream, sock=None):
         """Create the server socket."""
-        self.cad_file = cad_file
-        self.server_in = cad_file.stdin
-        self.server_out = cad_file.stdout
-        self.server_err = cad_file.stderr
+        self.cad_stream = cad_stream
+        self.server_in = cad_stream.stdin
+        self.server_out = cad_stream.stdout
+        self.server_err = cad_stream.stderr
 
         # Uninitialized variables
         self.conn = None  # Client socket
@@ -76,14 +76,14 @@ class Server:
         """Start the server.
 
         Arguments:
-            host {str} -- remote socket IP address
-            port {int} -- remote socket port
+            host (str): remote socket IP address.
+            port (int): remote socket port.
 
         Raises:
-            ConnectionError -- if there's a communication problem
+            ConnectionError: if there's a communication problem.
 
         Returns:
-            list -- remote socket name
+            list: remote socket name.
         """
         try:
             # Start connection between client and server (UNIX socket)
@@ -112,18 +112,20 @@ class Server:
     def send_data(self, obj):
         """Send an object through a socket.
 
-        1 - Serialize the object in JSON and encode the string as a bytes object;
-        2 - pack the serialized object length in an unsigned int (I) [four bytes],
-            and big-endian byte order (>) (this way the object size message has
-            always the same size (four bytes));
+        1 - Serialize the object in JSON and encode the string;
+
+        2 - pack the serialized object length in an unsigned int (I) [4 bytes],
+            and big-endian byte order (>) (this way the *object size* message
+            has always the same size);
+
         3 - send the data.
 
         Arguments:
-            obj {dict} -- object to send
+            obj (dict): object to send.
 
         Raises:
-            TypeError -- if the object is not serializable
-            ConnectionError -- if the socket connection is broken
+            TypeError: if the object is not serializable in JSON.
+            ConnectionError: if the socket connection is broken.
         """
         # Serialize the object in JSON and encode the string as a bytes object
         try:
@@ -153,16 +155,18 @@ class Server:
     def recv_data(self):
         """Receive an object through a socket.
 
-        1 - Receive the first four bytes of data, which contains the data length;
+        1 - Receive the first 4 bytes of data, which contains the data length;
+
         2 - Receive the data, serialized in JSON, and decode it;
+
         3 - Convert the received data in an object.
 
         Raises:
-            ConnectionError -- if the socket connection is broken
-            TypeError -- if the received data is not in JSON format
+            ConnectionError: if the socket connection is broken.
+            TypeError: if the received data is not in JSON format.
 
         Returns:
-            obj {dict} -- decoded and de-serialized received data
+            dict: decoded and de-serialized received data.
         """
         data_len = self.recv_bytes(4)
 
@@ -185,13 +189,13 @@ class Server:
         """Receive a specified number of bytes through a socket.
 
         Arguments:
-            n_bytes {int} -- number of bytes to receive
+            n_bytes (int): number of bytes to receive.
 
         Raises:
-            ConnectionError -- if the socket connection is broken
+            ConnectionError: if the socket connection is broken.
 
         Returns:
-            bytes -- received bytes stream
+            bytes: received bytes stream.
         """
         data = b''  # Bytes literal
         data_len = len(data)
@@ -210,10 +214,10 @@ class Server:
         return data
 
     def send_skill(self, expr):
-        """Send a skill expression to Cadence for evaluation.
+        """Send a skill expression to Cadence Virtuoso for evaluation.
 
         Arguments:
-            data {str} -- skill expression
+            data (str): skill expression.
         """
         self.server_out.write(expr)
         self.server_out.flush()
@@ -221,10 +225,11 @@ class Server:
     def recv_skill(self):
         """Receive a response from Cadence.
 
-        First receives the message length (number of bytes) and then receives the message.
+        First receives the message length (number of bytes) and then receives
+        the message.
 
         Returns:
-            str -- message received from cadence
+            str: message received from Cadence Virtuoso.
         """
         num_bytes = int(self.server_in.readline())
         msg = self.server_in.read(num_bytes)
@@ -236,28 +241,32 @@ class Server:
         return msg
 
     def send_warn(self, warn):
-        """Send a warning message to Cadence.
+        """Send a warning message to Cadence Virtuoso.
 
         Arguments:
-            warn {str} -- warning message
+            warn (str): warning message.
         """
         self.server_err.write(warn)
         self.server_err.flush()
 
     def send_debug(self, msg):
-        """Send a debug message to Cadence.
+        """Send a debug message to Cadence Virtuoso.
 
         Arguments:
-            msg {str} -- debug message
+            msg (str): debug message.
         """
-        time.sleep(1)
+        time.sleep(1)  # Wait a second before send the message
         self.send_warn("[Debug] {0}".format(msg))
 
     def close(self, code):
-        """Close the server socket and end the communication with Cadence."""
+        """Close the server socket and end the communication with Cadence.
+
+        Arguments:
+            code (int): exit code.
+        """
         self.conn.close()
         # Send feedback to Cadence
-        self.send_warn("Connection with the optimizer ended!\n\n")
+        self.send_warn("Connection with the client ended!\n\n")
         self.server_out.close()  # close stdout
         self.server_err.close()  # close stderr
-        self.cad_file.exit(code)  # close connection to cadence (code up to 255)
+        self.cad_stream.exit(code)  # close connection to cadence (code up to 255)

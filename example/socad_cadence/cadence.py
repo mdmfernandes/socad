@@ -38,7 +38,7 @@ OUT_FILE = os.environ.get('SOCAD_ROOT_DIR') + "/sim_res"
 
 
 def process_skill_request(req):
-    """Process a skill request from the optimizer.
+    """Process a skill request from the client.
 
     Based on the given request object, returns the skill expression to be
     evaluated by Cadence.
@@ -68,7 +68,7 @@ def process_skill_request(req):
     elif type_ == 'updateAndRun':
         # Store circuit variables in file
         util.store_vars_in_file(data, VAR_FILE)
-        res = 'updateAndRun("{0}" "{1}" "RESULT_FILE={2}")'.format(RUN_FILE, VAR_FILE, OUT_FILE)
+        res = 'updateAndRun("{0}" "{1}" "SOCAD_RESULT_FILE={2}")'.format(RUN_FILE, VAR_FILE, OUT_FILE)
     else:
         raise TypeError("Invalid object received from the client.")
 
