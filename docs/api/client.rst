@@ -5,5 +5,3 @@ Client
 
 .. autoclass:: Client
     :members:
-
-ghfhgf
