@@ -31,9 +31,6 @@ class Client:
     Arguments:
         sock (object, optional): socket to use for the connection
             (default: None).
-
-    Attributes:
-        sock (object): socket to use for the connection with a server.
     """
 
     def __init__(self, sock=None):

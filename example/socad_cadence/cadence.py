@@ -19,14 +19,16 @@ import os
 import sys
 
 import util
-# If can't import from the global package 'socad' import from a local package.
+
+# Try to import 'Server' from the global package 'socad'
 try:
     from socad import Server
 except ImportError as err:
-    # If can't import from the file server.py
-    try:
-        from server import Server
+    # If can't import from the global package
+    try:  # Try to import from server.py
+        from interface.server import Server
     except ImportError as err:
+        # If can't import the package, quit the program
         print("[ERROR] {0}. Exiting...".format(err))
         sys.exit('1')
 
