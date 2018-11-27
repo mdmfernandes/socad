@@ -16,7 +16,7 @@ The installation needs to be performed both in the **client** and the **server**
 
 ### Install with *pip*
 
-Although the project is not in PyPI, you can install it using pip. Go to the project folder and run:
+Although the project is not in PyPI, you can install it using *pip*. Go to the project folder and run:
 
 ```shell
 pip install .
@@ -34,7 +34,7 @@ python setup.py install
 
 ### Use as local module
 
-If the Cadence machine does not allow to install the **socad** package from the methods above, it loads the module from `examples/socad_cadence/server.py`.
+If the Cadence machine does not allow to install the **socad** package from the methods above, the module is loaded from `examples/socad_cadence/server.py`.
 
 ## Usage
 
