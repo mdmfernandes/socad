@@ -1,7 +1,8 @@
 # SOCAD
 
-[![Documentation Status](https://readthedocs.org/projects/socad/badge/?version=latest)](https://socad.readthedocs.io/en/latest/?badge=latest)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+Client: [![Python -V client](https://img.shields.io/badge/python-3.6%2B-blue.svg)](https://www.python.org/downloads/release/python-360/)
+Server: [![Python -V server](https://img.shields.io/badge/python-2.6%2B-blue.svg)](https://www.python.org/downloads/release/python-260/) [![Documentation Status](https://readthedocs.org/projects/socad/badge/?version=latest)](https://socad.readthedocs.io/en/latest/?badge=latest)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/mdmfernandes/socad/blob/master/LICENSE)
 
 SOCAD connects Cadence Virtuoso to a Python client. The communication between both processes is made through a server, using the following mechanisms:
 
