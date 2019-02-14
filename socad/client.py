@@ -42,14 +42,14 @@ class Client:
 
     def run(self, host, port):
         """Start the client.
-        
+
         Arguments:
             host (str): remote socket IP address.
             port (int): remote socket port.
-        
+
         Raises:
             ConnectionError: if can't connect to server.
-        
+
         Returns:
             list: remote socket name.
         """

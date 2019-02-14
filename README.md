@@ -7,7 +7,7 @@ Server: [![Python -V server](https://img.shields.io/badge/python-2.6%2B-blue.svg
 SOCAD connects Cadence Virtuoso to a Python client. The communication between both processes is made through a server, using the following mechanisms:
 
 * **Cadence<->Server**: Inter-process communication (IPC). The server is invoked by Cadence and waits for a client communication.
-* **Client<->Server**: Python sockets (more info here). Both processes can be run on the same machine or on different machines, according to the socket type chosen by the user. TCP sockets are used by default.
+* **Client<->Server**: Sockets (more info [here](https://docs.python.org/3/library/socket.html)). Both processes can be run on the same machine or on different machines, according to the socket type chosen by the user. TCP sockets are used by default.
 
 By using this library it is possible to control the Cadence environment from an external program.
 
