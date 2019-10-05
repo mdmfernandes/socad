@@ -28,7 +28,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Miguel Fernandes',
-    author_email='mdm.fernandes@gmail.com',
+    author_email='me@mdmfernandes.com',
     url='https://github.com/mdmfernandes/socad',
     packages=find_packages(exclude=['example']),
     keywords=[
