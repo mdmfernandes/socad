@@ -4,7 +4,9 @@ Client: [![Python -V client](https://img.shields.io/badge/python-3.6%2B-blue.svg
 Server: [![Python -V server](https://img.shields.io/badge/python-2.6%2B-blue.svg)](https://www.python.org/downloads/release/python-260/) [![Documentation Status](https://readthedocs.org/projects/socad/badge/?version=latest)](https://socad.readthedocs.io/en/latest/?badge=latest)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/mdmfernandes/socad/blob/master/LICENSE)
 
-SOCAD connects Cadence Virtuoso to a Python client. The communication between both processes is made through a server, using the following mechanisms:
+## This project is no longer maintained, as I no longer have access to Cadence Virtuoso. If you are interested in contributing and have any questions, feel free to contact me.
+
+**SOCAD** connects Cadence Virtuoso to a Python client. The communication between both processes is made through a server, using the following mechanisms:
 
 * **Cadence<->Server**: Inter-process communication (IPC). The server is invoked by Cadence and waits for a client communication.
 * **Client<->Server**: Sockets (more info [here](https://docs.python.org/3/library/socket.html)). Both processes can be run on the same machine or on different machines, according to the socket type chosen by the user. TCP sockets are used by default.
